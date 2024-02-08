@@ -35,6 +35,7 @@ const Cart = () => {
     const navigate = useNavigate()
     let authToken = localStorage.getItem('Authorization')
     let setProceed = authToken ? true : false
+    console.log(authToken);
 
 
     useEffect(() => {
@@ -55,16 +56,20 @@ const Cart = () => {
         }
 
     }, [cart])
+  
 
     const getCart = async () => {
         if (setProceed) {
-            const { data } = await axios.get(`${process.env.REACT_APP_GET_CART}`,
+            const { data } = await axios.get(`http://localhost:5000/api/cart/fetchcart`,
                 {
                     headers: {
                         'Authorization': authToken
                     }
                 })
             setCart(data);
+        }
+        else {
+            setOpenAlert(true)
         }
 
     }
@@ -85,19 +90,20 @@ const Cart = () => {
         setPreviousOrder(data)
     }
 
+
     const removeFromCart = async (product) => {
         if (setProceed) {
             try {
-                const response = await axios.delete(`${process.env.REACT_APP_DELETE_CART}/${product._id}`, {
+                const deleteProduct = await axios.delete(`http://localhost:5000/api/cart/deletecart/${product._id}`, {
                     headers: {
                         'Authorization': authToken
                     }
                 })
+          
                 toast.success("Removed From Cart", { autoClose: 500, theme: 'colored' })
                 setCart(cart.filter(c => c.productId._id !== product.productId._id))
             } catch (error) {
-                toast.error("Something went wrong", { autoClose: 500, theme: 'colored' })
-
+                toast.error(error, { autoClose: 500, theme: 'colored' })
             }
         }
     }
@@ -130,12 +136,13 @@ const Cart = () => {
                 }
                 <Container sx={{ display: 'flex', flexDirection: "column", mb: 10 }}>
                     <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap' }}>
-                        {
+                        {/* {
                             cart.length > 0 &&
                             cart.map(product =>
                                 <CartCard product={product} removeFromCart={removeFromCart} key={product._id} />
 
                             )}
+                            */}
                     </Box>
 
                     {

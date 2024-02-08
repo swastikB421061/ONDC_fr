@@ -46,7 +46,7 @@ const CheckoutForm = () => {
     })
     const getUserData = async () => {
         try {
-            const { data } = await axios.get(`${process.env.REACT_APP_GET_USER_DETAILS}`, {
+            const { data } = await axios.get(`http://localhost:5000/api/auth/getuser`, {
                 headers: {
                     'Authorization': authToken
                 }

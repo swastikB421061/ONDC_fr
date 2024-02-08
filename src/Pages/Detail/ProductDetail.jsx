@@ -70,7 +70,7 @@ const ProductDetail = () => {
             try {
 
 
-                const { data } = await axios.post(`${process.env.REACT_APP_ADD_CART}`, { _id: product._id, quantity: productQuantity }, {
+                const { data } = await axios.post(`http://localhost:5000/api/cart/addcart`, { _id: product._id, quantity: productQuantity }, {
                     headers: {
                         'Authorization': authToken
                     }
@@ -89,7 +89,7 @@ const ProductDetail = () => {
     const addToWhishList = async (product) => {
         if (setProceed) {
             try {
-                const { data } = await axios.post(`${process.env.REACT_APP_ADD_WISHLIST}`, { _id: product._id }, {
+                const { data } = await axios.post(`http://localhost:5000/api/wishlist/addwishlist`, { _id: product._id }, {
                     headers: {
                         'Authorization': authToken
                     }
@@ -263,8 +263,8 @@ const ProductDetail = () => {
                 <ProductReview setProceed={setProceed} authToken={authToken} id={id} setOpenAlert={setOpenAlert} />
 
 
-                <Typography sx={{ marginTop: 10, marginBottom: 5, fontWeight: 'bold', textAlign: 'center' }}>Similar Products</Typography>
-                <Box>
+                {/* <Typography sx={{ marginTop: 10, marginBottom: 5, fontWeight: 'bold', textAlign: 'center' }}>Similar Products</Typography> */}
+                {/* <Box>
                     <Box className='similarProduct' sx={{ display: 'flex', overflowX: 'auto', marginBottom: 10 }}>
                         {
                             similarProduct.filter(prod => prod._id !== id).map(prod => (
@@ -274,7 +274,7 @@ const ProductDetail = () => {
                             ))
                         }
                     </Box>
-                </Box>
+                </Box> */}
 
             </Container >
             <CopyRight   sx={{ mt: 8, mb: 10 }} />
